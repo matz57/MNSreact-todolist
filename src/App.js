@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ToDoList from './components/ToDo/ToDoList'; // importation du composant ToDoList
-import NewToDoForm from './components/ToDo/NewToDoForm'; // importation du composant NewToDoForm
-import EditModal from './components/ToDo/EditModal'; // importation du composant EditModal
-import ToDoProps from './components/ToDo/ToDoProps'; // importation du composant ToDoProps
+import ToDoList from './components/ToDo/ToDoList';
+import NewToDoForm from './components/ToDo/NewToDoForm';
+import EditModal from './components/ToDo/EditModal';
+import ToDoProps from './components/ToDo/ToDoProps';
 
 function App() {
     // initialisation des tâches
