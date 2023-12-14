@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-function EditModal({ todoIndex, todoTitle, todoDescription, onEdit }) {
-    const [show, setShow] = useState(false);
-    const [newTitle, setNewTitle] = useState('');
-    const [newDescription, setNewDescription] = useState('');
+function EditModal({ todoIndex, todoTitle, todoDescription, onEdit, onClose }) {
+
+    const [show, setShow] = useState(false); // état pour contrôler l'affichage du modal
+    const [newTitle, setNewTitle] = useState(''); // état pour stocker le nouveau titre
+    const [newDescription, setNewDescription] = useState(''); // état pour stocker la nouvelle description
 
     useEffect(() => {
         setNewTitle(todoTitle);
@@ -12,12 +13,15 @@ function EditModal({ todoIndex, todoTitle, todoDescription, onEdit }) {
         setShow(true);
     }, [todoIndex, todoTitle, todoDescription]);
 
+    // fonction pour gérer la fermeture du modal
     const handleClose = () => {
         setShow(false);
         setNewTitle('');
         setNewDescription('');
+        onClose();
     };
 
+    // fonction pour gérer la sauvegarde des modifications
     const handleSave = () => {
         onEdit(todoIndex, newTitle, newDescription);
         handleClose();
@@ -30,6 +34,7 @@ function EditModal({ todoIndex, todoTitle, todoDescription, onEdit }) {
                     <Modal.Title>Edit ToDo</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {/* champ de saisie pour le titre */}
                     <input
                         type="text"
                         className="form-control mb-2"
@@ -37,6 +42,8 @@ function EditModal({ todoIndex, todoTitle, todoDescription, onEdit }) {
                         onChange={(e) => setNewTitle(e.target.value)}
                         placeholder="Title"
                     />
+
+                    {/* champ de saisie pour la description */}
                     <textarea
                         className="form-control mb-2"
                         value={newDescription}
@@ -45,12 +52,19 @@ function EditModal({ todoIndex, todoTitle, todoDescription, onEdit }) {
                     />
                 </Modal.Body>
                 <Modal.Footer>
+                    {/* bouton pour annuler la modification */}
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={handleSave}>
-                        Save
-                    </Button>
+                    {/* bouton pour sauvegarder la modification */}
+                    {newTitle && newDescription ? (
+                        <Button variant="primary" onClick={handleSave}>Save</Button>
+                    ) : (
+                        <>
+                        <Button variant="danger" disabled>Save</Button><br/>
+                        <p>Fields cannot be empty.</p>
+                        </>
+                    )}
                 </Modal.Footer>
             </Modal>
         </>
